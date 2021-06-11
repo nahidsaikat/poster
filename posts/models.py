@@ -4,7 +4,7 @@ from django.utils import timezone
 
 def upload_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/<post.id>_<post.title>/<filename>
-    return '{0}_{1}/{2}'.format(instance.id, instance.title, filename)
+    return '{0}_{1}/{2}'.format(instance.post.id, instance.post.title, filename)
 
 
 class Post(models.Model):

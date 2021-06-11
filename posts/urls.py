@@ -9,4 +9,5 @@ router.register(r'posts', PostViewSet, basename='Posts')
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('posts/<pk>/upload/', PostFileView.as_view({'post': 'create'}), name='post-file-upload'),
 ]

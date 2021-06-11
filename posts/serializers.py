@@ -13,6 +13,14 @@ class PostFileSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
+    files = serializers.SerializerMethodField('get_files', read_only=True)
+
     class Meta:
         model = Post
         fields = '__all__'
+
+    def get_files(self, obj):
+        urls = []
+        for item in obj.files.all():
+            urls.append(item.file.url)
+        return urls

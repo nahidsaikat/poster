@@ -1,0 +1,40 @@
+version: '3.3'
+services:
+  poster-tests:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: wait-for-it poster-db:5435 -- python manage.py test --noinput
+    environment:
+      - DB_USER=postgres
+      - DB_PASSWORD=password
+      - DB_NAME=poster
+      - DB_HOST=poster-db
+      - DB_PORT=5435
+    depends_on:
+      - poster-db
+  poster-web:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+      DEV_MODE: 'true'
+      DB_HOST: poster-db
+    command: wait-for-it poster-db:5435 -- bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - poster-db
+  poster-db:
+    image: postgres:12
+    container_name: poster-db
+    ports:
+      - "5435:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=poster
+    volumes:
+      - ./.docker/data/poster-db:/var/lib/postgresql/data
+volumes:
+  poster-db:

@@ -81,7 +81,7 @@ DATABASES = {
         'USER': config('DB_USER', 'postgres'),
         'PASSWORD': config('DB_PASSWORD', 'password'),
         'HOST': config('DB_HOST', 'localhost'),
-        'PORT': config('DB_PORT', 5432),
+        'PORT': config('DB_PORT', 5435),
         'TEST': {
             'NAME': 'nx_survey_portal_test'
         }

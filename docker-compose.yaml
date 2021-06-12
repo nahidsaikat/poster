@@ -25,6 +25,14 @@ services:
       - "8000:8000"
     depends_on:
       - poster-db
+  redis:
+    image: "redis:alpine"
+    command: redis-server
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./.docker/redis-data:/var/lib/redis
+      - ./.docker/redis.conf:/usr/local/etc/redis/redis.conf
   poster-db:
     image: postgres:12
     container_name: poster-db

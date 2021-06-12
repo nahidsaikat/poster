@@ -1,13 +1,16 @@
-import string
+import requests
 
-from django.utils.crypto import get_random_string
-
+from django.conf import settings
 from celery import shared_task
+from django.utils import timezone
+
+from .models import Post
 
 @shared_task
 def post_to_facebook():
-    for i in range(12):
-        username = 'user_{}'.format(get_random_string(10, string.ascii_letters))
-        email = '{}@example.com'.format(username)
-        password = get_random_string(50)
+    for post in Post.objects.filter(posted=False):
+        current_time = timezone.now()
+        fb_url = f"https://graph.facebook.com/{settings.FB_PAGE_ID}/feed?message={post.caption}&access_token={settings.FB_ACCESS_TOKEN}"
+        if post.post_at <= current_time:
+            requests.post(fb_url)
     return '{} random users created with success!'.format(12)

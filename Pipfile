@@ -12,8 +12,11 @@ celery = "*"
 redis = "*"
 django-celery-beat = "*"
 django-celery-results = "*"
+pillow = "*"
 
 [dev-packages]
+faker = "*"
+factory-boy = "*"
 
 [requires]
 python_version = "3.9"

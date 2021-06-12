@@ -8,6 +8,10 @@ django = "*"
 djangorestframework = "*"
 python-decouple = "*"
 psycopg2-binary = "*"
+celery = "*"
+redis = "*"
+django-celery-beat = "*"
+django-celery-results = "*"
 
 [dev-packages]
 
